@@ -11,4 +11,4 @@ def get_photos():
 
 if __name__ == "__main__":
     app.debug = True
-    Flask.run(app)
+    Flask.run(app, host="0.0.0.0")

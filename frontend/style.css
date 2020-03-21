@@ -4,6 +4,9 @@ body {
 }
 
 #container {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -13,6 +16,7 @@ body {
 
 
 #loading {
+    float: top;
     height: 64px;
     width: 64px;
     background-image: url(images/loading.svg);
@@ -29,9 +33,12 @@ body {
   }
 
 #photo {
-  display: none;
-  height: 100vw;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
   height: 100vh;
   margin: 0;
   padding: 0;
+  background-size: cover;
 }

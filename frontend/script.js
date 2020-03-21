@@ -1,29 +1,61 @@
-var timer = "5" // timer in seconds to change photo
+var timer = "10" // timer in seconds to change photo
+var photoList = [];
+var index = 0;
+var photoDiv;
+var loadingDiv;
+
 
 $(document).ready(function () {
-   startSlideshow();
+    photoDiv = $("#photo");
+    loadingDiv = $("#loading")
+    photoDiv.focus()
+    startSlideshow();
 });
 
-async function getPhotoList() {
-    var photoList = await $.ajax({
-        type: "method",
-        url: "localhost:5000/api/get_photos",
-        dataType: "json",
-    }); 
+function startSlideshow() {
+    update_photo_list()
 
-    return photoList
+    setInterval(() => {
+        update_photo_list()
+    }, 60*60*1000 );
+
+    setTimeout(() => {
+        loadingDiv.css("display", "none");
+        next_picture();
+    }, 3000);
+
+    setInterval(() => {
+        next_picture()
+     }, timer * 1000);
+
+     $(document).keypress(function (e) { 
+        if (e.which == 110) {
+            next_picture()
+        }
+    });
 }
 
-function startSlideshow() {
-    var photoDiv = $("#photo")
-    setInterval(() => {
-        var photoList = await getPhotoList();
-        var index = 0;
-    }, 60 * 60 * 1000);
+function update_photo_list() {
+    $.getJSON("http://localhost/api/get_photos", function (result) {
+        photoList = result
+        console.log(photoList)
+    });
+    index = 0;
+}
 
-    setInterval(() => {
-        photoDiv.css("background-image", `url(http://localhost:3011/photos/${photoList[index]})`)
-    }, timer * 1000);
+function next_picture() {
+    console.log(photoList)
+    if (photoList.length != 0) {
+        photoDiv.css("background-image", `url(http://localhost/photos/${photoList[index]})`);
+        next_index();
+    }
+}
 
-
+function next_index() {
+    if (index == photoList.length - 1) {
+        index = 0;
+    }
+    else {
+        index += 1;
+    }
 }
