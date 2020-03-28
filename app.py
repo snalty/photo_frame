@@ -1,9 +1,38 @@
 #! env/bin/python
-from flask import Flask
+from flask import Flask, request
 app = Flask(__name__)
 
 from classes import Photos
 from interface import next_photo
+import json
+
+global current_photo
+
+@app.route('/api/update_active_photo')
+def update_active_photo():
+    index = request.args.get('index')
+    filename = request.args.get('filename')
+    print(f'Updated current index to {index}')
+    response = {
+        "status": "success",
+        "index": index,
+        "filename": filename
+    }
+    current_photo = filename
+    return json.dumps(response)
+
+@app.route('/api/get_active_photo')
+def get_active_photo():
+    if current_photo:
+        response = {
+            "status": "success",
+            "filename": filename
+        }
+    else:
+        response = {
+            "status": "fail"
+        }
+    return json.dumps(response)
 
 @app.route('/api/get_photos')
 def get_photos():

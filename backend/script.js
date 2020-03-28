@@ -1,4 +1,8 @@
 $(document).ready(function () {
+
+
+
+  /* Assign on click values to objects f */
   $("#next_button").click(nextPhoto);
 });
 
@@ -9,3 +13,9 @@ function nextPhoto() {
   });
   console.log('result');
 }
+
+
+function getCurrentPhoto() {
+
+}
+

@@ -50,6 +50,8 @@ function next_picture() {
     if (photoList.length != 0) {
         photoDiv.css("background-image", `url(http://localhost/photos/${photoList[index]})`);
         next_index();
+        console.log(`Updating backend index to ${index}`)
+        $.getJSON(`http://localhost/api/update_active_photo?index=${index}&filename=${photoList[index]}`)
     }
 }
 

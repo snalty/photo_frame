@@ -133,3 +133,4 @@ dmypy.json
 
 # Project specific
 photos/*
+photos_resized/*

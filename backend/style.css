@@ -1,5 +1,65 @@
 #next_button {
   color: white;
-  background: blue;
+  background: black;
+  width: 500px;
+  margin: 8px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  padding-left: 16px;
+  box-sizing: border-box;
+  font-family: sans-serif;
+  border-radius: 4px;
 }
 
+body {
+  background-color: whitesmoke;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+#header {
+  font-weight: bold;
+  font-size: 6em;
+  font-family: sans-serif;
+}
+
+#container {
+  width: 100vw;
+}
+
+#frame {
+  height: 300px;
+  width: 500px;
+  background-color: teal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 8px;
+}
+
+
+.loading {
+  float: top;
+  height: 64px;
+  width: 64px;
+  background-image: url(../frontend/images/loading.svg);
+  animation: rotation 1s infinite linear;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+@media only screen and (min-width: 800px) {
+  #container {
+    margin: 96px;
+  }
+}
