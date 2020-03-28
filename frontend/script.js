@@ -1,4 +1,4 @@
-var timer = "10" // timer in seconds to change photo
+var timer = "120" // timer in seconds to change photo
 var photoList = [];
 var index = 0;
 var photoDiv;
@@ -37,7 +37,9 @@ function startSlideshow() {
 
 function update_photo_list() {
     $.getJSON("http://localhost/api/get_photos", function (result) {
-        photoList = result
+        if (result.length > 0) {
+	   photoList = result
+	}
         console.log(photoList)
     });
     index = 0;

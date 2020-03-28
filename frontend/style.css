@@ -20,7 +20,7 @@ body {
     height: 64px;
     width: 64px;
     background-image: url(images/loading.svg);
-    animation: rotation 1s infinite linear;
+/*    animation: rotation 1s infinite linear; */
 }
 
 @keyframes rotation {
