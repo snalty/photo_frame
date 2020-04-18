@@ -15,18 +15,14 @@ $(document).ready(function () {
 function startSlideshow() {
     update_photo_list()
 
-    setInterval(() => {
-        update_photo_list()
-    }, 60*60*1000 );
+    setInterval(update_photo_list, 60*60*1000);
 
-    setTimeout(() => {
+    setTimeout(function() {
         loadingDiv.css("display", "none");
         next_picture();
     }, 3000);
 
-    setInterval(() => {
-        next_picture()
-     }, timer * 1000);
+    setInterval(next_picture, timer * 1000);
 
      $(document).keypress(function (e) { 
         if (e.which == 110) {
@@ -36,7 +32,8 @@ function startSlideshow() {
 }
 
 function update_photo_list() {
-    $.getJSON(`http://${hostname}/api/get_photos`, function (result) {
+    var json_url = "http://" + hostname + "/api/get_photos";
+    $.getJSON(json_url, function (result) {
         if (result.length > 0) {
 	   photoList = result
 	}
@@ -47,10 +44,13 @@ function update_photo_list() {
 
 function next_picture() {
     console.log(photoList)
-    if (photoList.length != 0) {
-        photoDiv.css("background-image", `url(http://${hostname}/photos/${photoList[index]})`);
-        console.log(`Updating backend index to ${index}`)
-        $.getJSON(`http://${hostname}/api/update_active_photo?index=${index}&filename=${photoList[index]}`, function( data ) {
+    if (photoList.length != 0) {i
+	var img_url = "url(http://" + hostname + "/photos/" + photoList[index] + ")";
+        photoDiv.css("background-image", img_url);
+        console.log("Updating backend index to index number " + index + " and setting css-background value to " + img_url;)
+	var json_url = "http://" + hostname + "/api/update_active_photo?index=" + index + "&filename=$" + photoList[index];
+	console.log(json_url);
+        $.getJSON(json_url, function( data ) {
 	    console.log(data);
         });
 	next_index();    
