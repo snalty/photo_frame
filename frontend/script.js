@@ -3,7 +3,7 @@ var photoList = [];
 var index = 0;
 var photoDiv;
 var loadingDiv;
-
+var hostname = location.hostname;
 
 $(document).ready(function () {
     photoDiv = $("#photo");
@@ -36,7 +36,7 @@ function startSlideshow() {
 }
 
 function update_photo_list() {
-    $.getJSON("http://localhost/api/get_photos", function (result) {
+    $.getJSON(`http://${hostname}/api/get_photos`, function (result) {
         if (result.length > 0) {
 	   photoList = result
 	}
@@ -48,11 +48,13 @@ function update_photo_list() {
 function next_picture() {
     console.log(photoList)
     if (photoList.length != 0) {
-        photoDiv.css("background-image", `url(http://localhost/photos/${photoList[index]})`);
-        next_index();
+        photoDiv.css("background-image", `url(http://${hostname}/photos/${photoList[index]})`);
         console.log(`Updating backend index to ${index}`)
-        $.getJSON(`http://localhost/api/update_active_photo?index=${index}&filename=${photoList[index]}`)
-    }
+        $.getJSON(`http://${hostname}/api/update_active_photo?index=${index}&filename=${photoList[index]}`, function( data ) {
+	    console.log(data);
+        });
+	next_index();    
+     }
 }
 
 function next_index() {

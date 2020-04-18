@@ -6,7 +6,6 @@ from classes import Photos
 from interface import next_photo
 import json
 
-global current_photo
 
 @app.route('/api/update_active_photo')
 def update_active_photo():
@@ -18,20 +17,18 @@ def update_active_photo():
         "index": index,
         "filename": filename
     }
-    current_photo = filename
+    with open("current", "w+") as f:
+        f.write(filename)
     return json.dumps(response)
 
 @app.route('/api/get_active_photo')
-def get_active_photo():
-    if current_photo:
-        response = {
-            "status": "success",
-            "filename": filename
-        }
-    else:
-        response = {
-            "status": "fail"
-        }
+def get_active_photo():   
+    with open("current", "r") as f:
+        filename = f.read()
+    response = {
+        "status": "success",
+        "filename": filename
+    }
     return json.dumps(response)
 
 @app.route('/api/get_photos')

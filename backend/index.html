@@ -3,6 +3,7 @@
   <head>
     <script src="./res/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="script.js"></script>
+    <script type="text/javascript" src="ripple.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   
@@ -10,10 +11,10 @@
     <div id="container">
       <div id="header">frame</div>
       <div id="photo_controls">
-        <div id=frame>
-          <div class="loading"></div>
+        <div id="frame">
+          <div id="frame_loading" class="loading"></div>
         </div>
-        <div id="next_button">Next photo</div>
+        <a class="ripplelink"><div id="next_button">Next photo</div></a>
       </div>
     </div>
   </body>
