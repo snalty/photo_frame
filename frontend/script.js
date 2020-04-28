@@ -1,4 +1,4 @@
-var timer = "120" // timer in seconds to change photo
+var timer = "30" // timer in seconds to change photo
 var photoList = [];
 var index = 0;
 var photoDiv;
@@ -26,6 +26,7 @@ function startSlideshow() {
 
      $(document).keypress(function (e) { 
         if (e.which == 110) {
+	    console.log("Keypress triggered next picture")
             next_picture()
         }
     });
@@ -44,16 +45,19 @@ function update_photo_list() {
 
 function next_picture() {
     console.log(photoList)
-    if (photoList.length != 0) {i
+    if (photoList.length != 0) {
 	var img_url = "url(http://" + hostname + "/photos/" + photoList[index] + ")";
         photoDiv.css("background-image", img_url);
-        console.log("Updating backend index to index number " + index + " and setting css-background value to " + img_url;)
-	var json_url = "http://" + hostname + "/api/update_active_photo?index=" + index + "&filename=$" + photoList[index];
+        console.log("Updating backend index to index number " + index + " and setting css-background value to " + img_url);
+	var json_url = "http://" + hostname + "/api/update_active_photo?index=" + index + "&filename=" + photoList[index];
 	console.log(json_url);
         $.getJSON(json_url, function( data ) {
 	    console.log(data);
         });
-	next_index();    
+	next_index();
+	console.log("Preloading next image");
+	var preload = new Image();
+	preload.src = "http://" + hostname + "/photos/" + photoList[index + 1];
      }
 }
 
