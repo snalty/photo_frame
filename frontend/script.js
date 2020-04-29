@@ -54,8 +54,12 @@ function next_picture() {
 
 function change_photo() {
     var img_url = "url(http://" + hostname + "/photos/" + photoList[index] + ")";
+    photoDiv.clone().prop('id', 'tempPhoto').propendTo(photoDiv.parent());
     photoDiv.css("background-image", img_url);
-    console.log("Updating backend index to index number " + index + " and setting css-background value to " + img_url);
+    setTimeout(function () {
+        console.log("Removing temporary cover image")
+        $('#tempPhoto').remove();
+    }, 5000)
 }
 
 function update_active_photo() {
