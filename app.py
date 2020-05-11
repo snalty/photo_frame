@@ -3,7 +3,7 @@ from flask import Flask, request
 app = Flask(__name__)
 
 from classes import Photos
-from interface import next_photo
+from interface import next_photo, mouse_click
 import json
 
 
@@ -39,6 +39,11 @@ def get_photos():
 @app.route('/api/next')
 def api_next_photo():
     next_photo()
+    return '{"status": "success"}'
+
+@app.route('/api/mouseclick')
+def api_mouse_click():
+    mouse_click()
     return '{"status": "success"}'
 
 if __name__ == "__main__":

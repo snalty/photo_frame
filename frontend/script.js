@@ -2,15 +2,31 @@ var timer = "30" // timer in seconds to change photo
 var photoList = [];
 var index = 0;
 var photoDiv;
+var input;
 var loadingDiv;
 var hostname = location.hostname;
 
 $(document).ready(function () {
     photoDiv = $("#photo");
+    photoDiv.click( function() {
+        console.log("fuck");
+    });
     loadingDiv = $("#loading");
-    photoDiv.focus();
+    //mouseClick();
     startSlideshow();
+    setInterval( function () {
+	mouseClick();
+        console.log("Is doc focused:" + document.hasFocus());
+    }, 1000);
 });
+
+// Function that does a mouse click because qt-webkit-kiosk seems dumb and doesnt seem to get focus straight away maybe?
+function mouseClick() {
+    var json_url = "http://" + hostname + "/api/mouseclick";
+    $.getJSON(json_url, function( data ) {
+	    console.log("clicking the mouse for reasons");
+    });                                             
+}
 
 function startSlideshow() {
     update_photo_list()
@@ -24,14 +40,6 @@ function startSlideshow() {
 
     setInterval(next_picture, timer * 1000);
 
-    photoDiv.keypress(function (e) { 
-        if (e.which == 110) {
-	    console.log("Keypress triggered next picture")
-            next_picture()
-        }
-    });
-}
-
 function update_photo_list() {
     var json_url = "http://" + hostname + "/api/get_photos";
     $.getJSON(json_url, function (result) {
@@ -41,10 +49,10 @@ function update_photo_list() {
         console.log(photoList)
     });
     index = 0;
-}
+};
 
 function next_picture() {
-    console.log(photoList)
+    console.log(photoList);
     if (photoList.length != 0) {
         change_photo();
         update_active_photo();
@@ -54,10 +62,10 @@ function next_picture() {
 
 function change_photo() {
     var img_url = "url(http://" + hostname + "/photos/" + photoList[index] + ")";
-    photoDiv.clone().prop('id', 'tempPhoto').propendTo(photoDiv.parent());
+    photoDiv.clone().prop('id', 'tempPhoto').css("z-index", 100).prependTo(photoDiv.parent());
     photoDiv.css("background-image", img_url);
     setTimeout(function () {
-        console.log("Removing temporary cover image")
+        console.log("Removing temporary cover image");
         $('#tempPhoto').remove();
     }, 5000)
 }
@@ -77,3 +85,7 @@ function next_index() {
         index += 1;
     }
 }
+
+$(document).keydown(function (e) {
+	console.log(e.which);                                                                                                   if (e.which == 110) {                                                                                                       console.log("Keypress triggered next picture");                                                                         next_picture();                                                                                                     }                                                                                                                   });
+};
