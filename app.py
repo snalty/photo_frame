@@ -4,7 +4,8 @@ from flask_socketio import SocketIO, send, emit
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'fdkfgjrigjierjgijsdrdigksdopk03i504i560334654235'
-socketio = SocketIO(app)
+app.debug = True
+socketio = SocketIO(app, engineio_logger=True, logger=True, debug=True, cors_allowed_origins=[])
 
 from classes import Photos
 # from interface import next_photo, mouse_click
@@ -67,19 +68,6 @@ def api_next_photo():
 def on_connect():
     photos = Photos()
     emit('photos', photos.json())
-
-@app.route('/')
-def index():
-    return '''<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
-<script type="text/javascript" charset="utf-8">
-    var socket = io();
-    socket.on('connect', function() {
-        socket.emit('my event', {data: 'Im connected!'});
-    });
-    socket.on('photos', function(msg) {
-        console.log(msg)
-    })
-</script>'''
 
 
 if __name__ == "__main__":

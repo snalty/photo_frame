@@ -1,10 +1,9 @@
 #! /home/sam/env/bin/python
-from app import app
+from app import app as a
 from flask_socketio import SocketIO
-socketio = SocketIO(app)
+app = SocketIO(a, engineio_logger=True, logger=True, debug=True)
 
 
 if __name__ == "__main__":
-  cors_allowed_origins=[]
-  socketio.run()
+  socketio.run(app)
   

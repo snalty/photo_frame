@@ -1,12 +1,14 @@
-var timer = "30" // timer in seconds to change photo
+var timer = "3600" // timer in seconds to change photo
 var photoList = [];
 var index = 0;
 var photoDiv;
 var input;
 var loadingDiv;
 var hostname = location.hostname;
+var socketHost = 'ws://' + hostname
 
-var socket = io('ws://127.0.0.1:5000/');
+
+var socket = io(socketHost);
 socket.connect();
 
 function photo_listener() {
@@ -19,7 +21,7 @@ function photo_listener() {
 function next_listener() {
     socket.on('next', function() {
         console.log('API instructed next photo')
-        neSSxt_picture();
+        next_picture();
     })
 };
 
@@ -43,12 +45,13 @@ function startSlideshow() {
     setInterval(next_picture, timer * 1000);
 }
 
-function update_photo_list() {
-    socket.emit('get_photos', function(msg) {
-        print(msg)
-        photoList = JSON.parse(msg);
-    })
-    index = 0;
+function getPhoto(filename) {
+	
+}
+
+
+function update_photo_list(msg) {
+    socket.emit('get_photos', msg);
 };
 
 function next_picture() {
@@ -61,8 +64,7 @@ function next_picture() {
 }
 
 function change_photo() {
-//    var img_url = "url(http://" + hostname + "/photos/" + photoList[index] + ")";
-    var img_url = "url(file:///C:/Users/Sam/photo_frame/photos/" + photoList[index] + ")";
+    var img_url = "url(http://" + hostname + "/photos/" + photoList[index] + ")";
     photoDiv.css("background-image", img_url);
 }
 
